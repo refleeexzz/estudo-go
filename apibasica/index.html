@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste da API Go</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        input, button { margin: 8px 0; padding: 8px; }
+        .result { margin-top: 16px; padding: 12px; background: #f0f0f0; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Testar API Go</h1>
+    <h2>/hello</h2>
+    <button onclick="testHello()">Testar /hello</button>
+    <div id="helloResult" class="result"></div>
+
+    <h2>/hash</h2>
+    <input type="text" id="password" placeholder="Digite a senha">
+    <button onclick="testHash()">Testar /hash</button>
+    <div id="hashResult" class="result"></div>
+
+    <script>
+        function testHello() {
+            fetch('http://localhost:8080/hello')
+                .then(res => res.text())
+                .then(data => document.getElementById('helloResult').innerText = data)
+                .catch(err => document.getElementById('helloResult').innerText = 'Erro: ' + err);
+        }
+
+        function testHash() {
+            const password = document.getElementById('password').value;
+            fetch('http://localhost:8080/hash?password=' + encodeURIComponent(password))
+                .then(res => res.text())
+                .then(data => document.getElementById('hashResult').innerText = data)
+                .catch(err => document.getElementById('hashResult').innerText = 'Erro: ' + err);
+        }
+    </script>
+</body>
+</html>
