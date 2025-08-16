@@ -1,0 +1,205 @@
+/* Estilo do menu topo */
+.nav {
+    width: 100%;
+    background: rgba(42, 82, 152, 0.95);
+    color: #fff;
+    padding: 0 0;
+    box-shadow: 0 2px 8px rgba(42,82,152,0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    min-height: 60px;
+}
+.nav .logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding-left: 48px;
+}
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+    margin: 0;
+    padding-right: 48px;
+}
+.nav-list li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.nav-list li a:hover {
+    color: #00d2ff;
+}
+body {
+    background: linear-gradient(120deg, #3a7bd5 0%, #00d2ff 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    box-sizing: border-box;
+}
+.container {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 120px;
+    margin-bottom: 100px; /* Espaço para rodapé fixo */
+}
+.form-box {
+    background: rgba(255,255,255,0.13);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.17);
+    padding: 40px 32px;
+    min-width: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-box h2 {
+    color: #2b5876;
+    margin-bottom: 18px;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+input {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    background: #e3f2fd;
+    font-size: 1rem;
+    outline: none;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background: #3a7bd5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(42,82,152,0.18);
+}
+button:hover {
+    background: #2b5876;
+}
+/* .result sem altura mínima e sem padding para não separar os botões */
+.result {
+    margin-top: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 8px;
+    color: #2b5876;
+    min-height: 0;
+    width: 95%;
+    text-align: center;
+    box-shadow: none;
+}
+footer {
+    text-align: center;
+    color: #fff;
+    background: rgba(42, 82, 152, 0.95);
+    padding: 18px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-size: 1rem;
+    z-index: 9;
+}
+/* Botão inteligente de registro */
+.smart-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 18px;
+    box-shadow: 0 2px 8px rgba(42,82,152,0.18);
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+.smart-btn:hover {
+    background: linear-gradient(90deg, #2b5876 0%, #3a7bd5 100%);
+    box-shadow: 0 4px 16px rgba(42,82,152,0.22);
+    transform: translateY(-2px) scale(1.03);
+}
+.smart-btn.loading {
+    background: #e3f2fd;
+    color: #2b5876;
+    cursor: wait;
+    box-shadow: none;
+}
+.loader {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border: 3px solid #3a7bd5;
+    border-top: 3px solid #00d2ff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        margin-top: 110px;
+        margin-bottom: 90px;
+    }
+    .form-box {
+        min-width: 90vw;
+        max-width: 98vw;
+    }
+    .nav {
+        padding: 0 0;
+        min-height: 50px;
+    }
+    .nav .logo {
+        padding-left: 16px;
+    }
+    .nav-list {
+        padding-right: 16px;
+        gap: 18px;
+    }
+}
+
+/* Remover regras conflitantes e garantir espaçamento entre botões */
+.form-box button,
+.form-box .smart-btn {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+/* Separe os botões de login e registro visualmente */
+.form-box button + .smart-btn {
+    margin-top: 32px !important;
+}
+
+/* Forçar separação entre botões de login e registro */
+.form-box button {
+    margin-bottom: 16px !important;
+}
+.form-box button + .smart-btn {
+    margin-top: 0 !important;
+}

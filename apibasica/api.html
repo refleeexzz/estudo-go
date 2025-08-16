@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Estudo Go - Teste da API</title>
+    <link rel="stylesheet" href="style-api.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">Estudo Go</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li id="loginBtn"><a href="auth.html">Login/Registro</a></li>
+            <li id="apiBtn" style="display:none"><a href="api.html">Testar API</a></li>
+            <li><a href="/logout" id="logoutBtn" class="logout-btn" style="display:none">Sair</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="api-test">
+            <div class="endpoint-box">
+                <h2><img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" width="24"> /check-username</h2>
+                <input type="text" id="checkUsername" placeholder="Usuário para checar">
+                <button class="api-btn" onclick="testCheckUsername()">Testar /check-username</button>
+                <div id="checkUsernameResult" class="result"></div>
+            </div>
+            <h1><img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" width="40" style="vertical-align:middle;"> Testar Endpoints da API</h1>
+            <div class="endpoint-box">
+                <h2><img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" width="24"> /hello</h2>
+                <button class="api-btn" onclick="testHello()">Testar /hello</button>
+                <div id="helloResult" class="result"></div>
+            </div>
+            <div class="endpoint-box">
+                <h2><img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" width="24"> /hash</h2>
+                <input type="text" id="password" placeholder="Digite a senha">
+                <button class="api-btn" onclick="testHash()">Testar /hash</button>
+                <div id="hashResult" class="result"></div>
+            </div>
+            <div class="endpoint-box">
+                <h2><img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" width="24"> /me</h2>
+                <button class="api-btn" onclick="testMe()">Testar /me</button>
+                <div id="meResult" class="result"></div>
+            </div>
+            <div class="endpoint-box">
+                <h2><img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" width="24"> /register</h2>
+                <input type="email" id="regEmail" placeholder="E-mail">
+                <input type="text" id="regUsername" placeholder="Usuário">
+                <input type="password" id="regPassword" placeholder="Senha">
+                <button class="api-btn" onclick="testRegister()">Testar /register</button>
+                <div id="registerResult" class="result"></div>
+            </div>
+            <div class="endpoint-box">
+                <h2><img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" width="24"> /login</h2>
+                <input type="text" id="loginUsername" placeholder="Usuário">
+                <input type="password" id="loginPassword" placeholder="Senha">
+                <button class="api-btn" onclick="testLogin()">Testar /login</button>
+                <div id="loginResult" class="result"></div>
+            </div>
+            <div class="endpoint-box">
+                <h2><img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" width="24"> /logout</h2>
+                <button class="api-btn" onclick="testLogout()">Testar /logout</button>
+                <div id="logoutResult" class="result"></div>
+            </div>
+        </section>
+    </main>
+    <script>
+        // Exibe/oculta botões conforme login
+        fetch('http://localhost:8080/me')
+            .then(res => res.json())
+            .then(data => {
+                if (data.logged) {
+                    document.getElementById('logoutBtn').style.display = '';
+                    document.getElementById('apiBtn').style.display = '';
+                    document.getElementById('loginBtn').style.display = 'none';
+                } else {
+                    document.getElementById('logoutBtn').style.display = 'none';
+                    document.getElementById('apiBtn').style.display = 'none';
+                    document.getElementById('loginBtn').style.display = '';
+                }
+            });
+    </script>
+    <footer>
+        <p>&copy; 2025 <b>Estudo Go</b>. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        function testCheckUsername() {
+            const username = document.getElementById('checkUsername').value;
+            fetch('http://localhost:8080/check-username?username=' + encodeURIComponent(username))
+                .then(res => res.text().then(data => ({ok: res.ok, data})))
+                .then(res => setResult('checkUsernameResult', res.data, res.ok))
+                .catch(err => setResult('checkUsernameResult', 'Erro: ' + err, false));
+        }
+        // Feedback visual para resultado
+        function setResult(id, text, success) {
+            const el = document.getElementById(id);
+            el.innerText = text;
+            el.style.background = success ? '#e0f7fa' : '#ffebee';
+            el.style.color = success ? '#00796b' : '#c62828';
+        }
+        function testHello() {
+            fetch('http://localhost:8080/hello')
+                .then(res => res.text().then(data => ({ok: res.ok, data})))
+                .then(res => setResult('helloResult', res.data, res.ok))
+                .catch(err => setResult('helloResult', 'Erro: ' + err, false));
+        }
+        function testHash() {
+            const password = document.getElementById('password').value;
+            fetch('http://localhost:8080/hash?password=' + encodeURIComponent(password))
+                .then(res => res.text().then(data => ({ok: res.ok, data})))
+                .then(res => setResult('hashResult', res.data, res.ok))
+                .catch(err => setResult('hashResult', 'Erro: ' + err, false));
+        }
+        function testMe() {
+            fetch('http://localhost:8080/me')
+                .then(res => res.text().then(data => ({ok: res.ok, data})))
+                .then(res => setResult('meResult', res.data, res.ok))
+                .catch(err => setResult('meResult', 'Erro: ' + err, false));
+        }
+        function testRegister() {
+            const email = document.getElementById('regEmail').value;
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+            const params = new URLSearchParams({email, username, password});
+            fetch('http://localhost:8080/register', {
+                method: 'POST',
+                body: params
+            })
+            .then(res => res.text().then(data => ({ok: res.ok, data})))
+            .then(res => setResult('registerResult', res.data, res.ok))
+            .catch(err => setResult('registerResult', 'Erro: ' + err, false));
+        }
+        function testLogin() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const params = new URLSearchParams({username, password});
+            fetch('http://localhost:8080/login', {
+                method: 'POST',
+                body: params
+            })
+            .then(res => res.text().then(data => ({ok: res.ok, data})))
+            .then(res => setResult('loginResult', res.data, res.ok))
+            .catch(err => setResult('loginResult', 'Erro: ' + err, false));
+        }
+        function testLogout() {
+            fetch('http://localhost:8080/logout', {
+                method: 'POST'
+            })
+            .then(res => res.text().then(data => ({ok: res.ok, data})))
+            .then(res => setResult('logoutResult', res.data, res.ok))
+            .catch(err => setResult('logoutResult', 'Erro: ' + err, false));
+        }
+    </script>
+    <script>
+        function testHello() {
+            fetch('http://localhost:8080/hello')
+                .then(res => res.text())
+                .then(data => document.getElementById('helloResult').innerText = data)
+                .catch(err => document.getElementById('helloResult').innerText = 'Erro: ' + err);
+        }
+        function testHash() {
+            const password = document.getElementById('password').value;
+            fetch('http://localhost:8080/hash?password=' + encodeURIComponent(password))
+                .then(res => res.text())
+                .then(data => document.getElementById('hashResult').innerText = data)
+                .catch(err => document.getElementById('hashResult').innerText = 'Erro: ' + err);
+        }
+    </script>
+    <script>
+        // Exibe botão de logout e Testar API se houver cookie de sessão
+        if (document.cookie.includes('session=')) {
+            document.getElementById('logoutBtn').style.display = '';
+            document.getElementById('apiBtn').style.display = '';
+        }
+    </script>
+</body>
+</html>

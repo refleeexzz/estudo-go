@@ -1,0 +1,222 @@
+    button {
+        width: 100%;
+        padding: 12px;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.08rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+        box-shadow: 0 2px 8px rgba(42,82,152,0.18);
+        margin-bottom: 8px;
+        display: block;
+        background: linear-gradient(90deg, #2b5876 0%, #3a7bd5 100%);
+        box-shadow: 0 4px 16px rgba(42,82,152,0.22);
+        transform: translateY(-2px) scale(1.03);
+    }
+/* Botão de logout */
+.logout-btn {
+    background: #c62828;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(42,82,152,0.18);
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.logout-btn:hover {
+    background: #b71c1c;
+}
+
+/* Botões de teste da API */
+.api-btn {
+    width: 80%;
+    padding: 10px;
+    background: #3a7bd5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.api-btn:hover {
+    background: #2b5876;
+}
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(120deg, #3a7bd5 0%, #00d2ff 100%);
+    min-height: 100vh;
+}
+nav {
+    background: rgba(42, 82, 152, 0.95);
+ 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 48px;
+    box-shadow: 0 2px 8px rgba(42,82,152,0.12);
+}
+.logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+ul {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+}
+ 
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+ul li a:hover {
+    color: #00d2ff;
+}
+main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 80vh;
+}
+.api-test {
+    background: rgba(255,255,255,0.13);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.17);
+    padding: 40px 32px;
+    margin-top: 48px;
+    min-width: 340px;
+    max-width: 98vw;
+    color: #2b5876;
+    text-align: center;
+}
+.api-test h1 {
+    margin-bottom: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 700;
+}
+.endpoint-box {
+    margin-bottom: 32px;
+}
+.endpoint-box h2 {
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 14px 0;
+    border-radius: 8px;
+    border: none;
+    background: #e3f2fd;
+    font-size: 1.08rem;
+    outline: none;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background: rgba(255,255,255,0.22);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(42,82,152,0.10);
+    padding: 18px 12px 12px 12px;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    background: #e3f2fd;
+    font-size: 1rem;
+    outline: none;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background: #3a7bd5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+button:hover {
+    background: #2b5876;
+}
+.result {
+    margin-top: 8px;
+    padding: 10px;
+    background: #e0f7fa;
+    border-radius: 8px;
+    color: #00796b;
+    min-height: 24px;
+    width: 100%;
+    text-align: center;
+    font-size: 1.05rem;
+    box-shadow: none;
+    .api-test {
+        min-width: 90vw;
+        max-width: 98vw;
+        padding: 18px 2vw;
+    }
+    .endpoint-box {
+        margin-bottom: 18px;
+        padding: 12px 4px;
+    }
+    input, button, .result {
+        font-size: 1rem;
+        width: 100%;
+    }
+    margin-top: 12px;
+    padding: 10px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    color: #2b5876;
+    min-height: 24px;
+    width: 100%;
+@media (max-width: 900px) {
+    .api-test {
+        min-width: 90vw;
+        padding: 24px 8px;
+    }
+    .endpoint-box {
+        margin-bottom: 24px;
+    }
+    input, button, .result {
+        font-size: 1rem;
+        width: 100%;
+    }
+}
+    text-align: center;
+}
+footer {
+    text-align: center;
+    color: #fff;
+    background: rgba(42, 82, 152, 0.95);
+    padding: 18px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-size: 1rem;
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Estudo Go - Login & Registro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style-auth.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="logo">Estudo Go</div>
+        <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li id="loginBtn"><a href="auth.html">Login/Registro</a></li>
+            <li><a href="api.html">Testar API</a></li>
+            <li><a href="/logout" id="logoutBtn" class="logout-btn">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="container" id="authContainer">
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 <b>Estudo Go</b>. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        // Exibe/oculta botões conforme login
+        fetch('http://localhost:8080/me')
+            .then(res => res.json())
+            .then(data => {
+                if (data.logged) {
+                    document.getElementById('logoutBtn').style.display = '';
+                    if (document.getElementById('loginBtn')) document.getElementById('loginBtn').style.display = 'none';
+                } else {
+                    document.getElementById('logoutBtn').style.display = 'none';
+                    if (document.getElementById('loginBtn')) document.getElementById('loginBtn').style.display = '';
+                }
+            });
+            const el = document.getElementById(id);
+            el.innerText = text;
+            el.style.background = success ? '#e0f7fa' : '#ffebee';
+            el.style.color = success ? '#00796b' : '#c62828';
+        }
+        function renderAuth() {
+            const container = document.getElementById('authContainer');
+            container.innerHTML = '';
+            fetch('http://localhost:8080/me')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.logged) {
+                        // Usuário logado: mostra apenas mensagem e botão de logout
+                        container.innerHTML = `
+                            <div class="form-box">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" width="40" alt="Login" class="form-icon">
+                                <h2 class="form-title">Você já está logado!</h2>
+                                <p style="margin-bottom:24px;color:#2b5876;font-size:1.1rem;">Para sair, clique em logout no menu acima.</p>
+                            </div>
+                        `;
+                        document.getElementById('logoutBtn').style.display = '';
+                    } else {
+                        // Usuário não logado: mostra login e registro
+                        container.innerHTML = `
+                            <div class="form-box" id="loginBox">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" width="40" alt="Login" class="form-icon">
+                                <h2 class="form-title">Login</h2>
+                                <form id="loginForm">
+                                    <input type="text" name="username" placeholder="Usuário" required>
+                                    <input type="password" name="password" placeholder="Senha" required>
+                                    <button type="submit">Entrar</button>
+                                </form>
+                                <div id="loginResult" class="result"></div>
+                                <button id="registerBtn" class="smart-btn">Registrar</button>
+                            </div>
+                            <div class="form-box" id="registerBox" style="display:none">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" width="40" alt="Registro" class="form-icon">
+                                <h2 class="form-title">Registro</h2>
+                                <form id="registerForm">
+                                    <input type="email" name="email" placeholder="E-mail" required>
+                                    <input type="text" name="username" placeholder="Usuário" required>
+                                    <input type="password" name="password" placeholder="Senha" required>
+                                    <button type="submit">Registrar</button>
+                                </form>
+                                <div id="registerResult" class="result"></div>
+                                <button id="backToLogin" class="smart-btn">Voltar ao Login</button>
+                            </div>
+                        `;
+                        document.getElementById('logoutBtn').style.display = 'none';
+                        // Adiciona handlers
+                        document.getElementById('loginForm').onsubmit = function(e) {
+                            e.preventDefault();
+                            const form = e.target;
+                            fetch('http://localhost:8080/login', {
+                                method: 'POST',
+                                body: new URLSearchParams(new FormData(form))
+                            })
+                            .then(async res => {
+                                const text = await res.text();
+                                try {
+                                    const json = JSON.parse(text);
+                                    if (json.success) {
+                                        window.location.replace('index.html');
+                                    } else {
+                                        setResult('loginResult', 'Login falhou', false);
+                                    }
+                                } catch (e) {
+                                    setResult('loginResult', text, false);
+                                }
+                            })
+                            .catch(err => setResult('loginResult', 'Erro: ' + err, false));
+                        };
+                        document.getElementById('registerForm').onsubmit = function(e) {
+                            e.preventDefault();
+                            // Bloqueia envio se já estiver logado (extra segurança)
+                            fetch('http://localhost:8080/me')
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.logged) {
+                                        setResult('registerResult', 'Você já está logado. Não é possível registrar outro usuário.', false);
+                                        return;
+                                    }
+                                    const form = e.target;
+                                    fetch('http://localhost:8080/register', {
+                                        method: 'POST',
+                                        body: new URLSearchParams(new FormData(form))
+                                    })
+                                    .then(res => res.text().then(data => ({ok: res.ok, data})))
+                                    .then(res => setResult('registerResult', res.data, res.ok))
+                                    .catch(err => setResult('registerResult', 'Erro: ' + err, false));
+                                });
+                        };
+                        // Botão inteligente de registro
+                        const registerBtn = document.getElementById('registerBtn');
+                        const loginBox = document.getElementById('loginBox');
+                        const registerBox = document.getElementById('registerBox');
+                        const backToLogin = document.getElementById('backToLogin');
+                        registerBtn.addEventListener('click', function() {
+                            registerBtn.classList.add('loading');
+                            registerBtn.innerHTML = '<span class="loader"></span> Processando...';
+                            setTimeout(() => {
+                                registerBtn.classList.remove('loading');
+                                registerBtn.innerHTML = 'Registrar';
+                                loginBox.style.display = 'none';
+                                registerBox.style.display = 'flex';
+                            }, 900);
+                        });
+                        backToLogin.addEventListener('click', function() {
+                            registerBox.style.display = 'none';
+                            loginBox.style.display = 'flex';
+                        });
+                    }
+                });
+        }
+        window.addEventListener('DOMContentLoaded', renderAuth);
+    </script>
+</body>
+</html>

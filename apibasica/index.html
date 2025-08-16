@@ -2,39 +2,59 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Teste da API Go</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        input, button { margin: 8px 0; padding: 8px; }
-        .result { margin-top: 16px; padding: 12px; background: #f0f0f0; border-radius: 4px; }
-    </style>
+    <title>Estudo Go - Land Page</title>
+    <link rel="stylesheet" href="style-land.css">
 </head>
 <body>
-    <h1>Testar API Go</h1>
-    <h2>/hello</h2>
-    <button onclick="testHello()">Testar /hello</button>
-    <div id="helloResult" class="result"></div>
-
-    <h2>/hash</h2>
-    <input type="text" id="password" placeholder="Digite a senha">
-    <button onclick="testHash()">Testar /hash</button>
-    <div id="hashResult" class="result"></div>
-
+    <nav>
+        <div class="logo">Estudo Go</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li id="loginBtn"><a href="auth.html">Login/Registro</a></li>
+            <li id="apiBtn" style="display:none"><a href="api.html">Testar API</a></li>
+            <li><a href="/logout" id="logoutBtn" style="display:none">Logout</a></li>
+        </ul>
+    </nav>
+    <section class="hero">
+        <h1>Bem-vindo ao <span style="color:#3a7bd5">Estudo Go</span>!</h1>
+        <p>Aprenda, teste e experimente uma <b>API Go</b> moderna.<br>Faça login, registre-se e explore funcionalidades com segurança e praticidade.</p>
+        <a href="auth.html" class="btn">Começar</a>
+    </section>
+    <section class="features">
+        <div class="feature">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Login" width="48" style="margin-bottom:10px;">
+            <h3>Registro & Login</h3>
+            <p>Crie sua conta e acesse recursos exclusivos com autenticação segura.</p>
+        </div>
+        <div class="feature">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" alt="API" width="48" style="margin-bottom:10px;">
+            <h3>Teste de API</h3>
+            <p>Experimente endpoints e veja respostas em tempo real, direto do navegador.</p>
+        </div>
+        <div class="feature">
+            <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="Segurança" width="48" style="margin-bottom:10px;">
+            <h3>Segurança</h3>
+            <p>Senhas protegidas com hash seguro (<b>bcrypt</b>) e controle de sessão.</p>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2025 <b>Estudo Go</b>. Todos os direitos reservados.</p>
+    </footer>
     <script>
-        function testHello() {
-            fetch('http://localhost:8080/hello')
-                .then(res => res.text())
-                .then(data => document.getElementById('helloResult').innerText = data)
-                .catch(err => document.getElementById('helloResult').innerText = 'Erro: ' + err);
-        }
-
-        function testHash() {
-            const password = document.getElementById('password').value;
-            fetch('http://localhost:8080/hash?password=' + encodeURIComponent(password))
-                .then(res => res.text())
-                .then(data => document.getElementById('hashResult').innerText = data)
-                .catch(err => document.getElementById('hashResult').innerText = 'Erro: ' + err);
-        }
+        
+        fetch('http://localhost:8080/me')
+            .then(res => res.json())
+            .then(data => {
+                if (data.logged) {
+                    document.getElementById('logoutBtn').style.display = '';
+                    document.getElementById('apiBtn').style.display = '';
+                    document.getElementById('loginBtn').style.display = 'none';
+                } else {
+                    document.getElementById('logoutBtn').style.display = 'none';
+                    document.getElementById('apiBtn').style.display = 'none';
+                    document.getElementById('loginBtn').style.display = '';
+                }
+            });
     </script>
 </body>
 </html>
