@@ -1,0 +1,138 @@
+.todo-container.dark {
+  background: #1a202c;
+  color: #fff;
+}
+body.dark {
+  background: #1a202c !important;
+}
+.todo-container.dark {
+  background: #1a202c;
+  color: #fff;
+}
+.todo-container.dark h1 {
+  color: #fff;
+}
+.todo-container.dark .todo-input {
+  background: #2d3748;
+  color: #fff;
+  border: 1px solid #4a5568;
+}
+.todo-container.dark .todo-add-btn {
+  background: linear-gradient(90deg,#2b6cb0,#2c5282);
+}
+.todo-container.dark .todo-list li {
+  background: #2d3748;
+  color: #fff;
+}
+.todo-container.dark .todo-remove-btn {
+  background: #c53030;
+}
+
+
+.todo-container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  padding: 32px 24px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.todo-container h1 {
+  text-align: center;
+  color: #2d3748;
+  margin-bottom: 24px;
+}
+
+.todo-input-wrapper {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.todo-input:focus {
+  border-color: #3182ce;
+}
+
+.todo-add-btn {
+  background: linear-gradient(90deg,#3182ce,#63b3ed);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.todo-add-btn:hover {
+  background: linear-gradient(90deg,#2563eb,#4299e1);
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f7fafc;
+  margin-bottom: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background 0.2s;
+}
+.todo-list li.done {
+  background: #c6f6d5;
+  text-decoration: line-through;
+  color: #718096;
+}
+.todo-list li span {
+  flex: 1;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+.todo-list li span:hover {
+  color: #3182ce;
+}
+.todo-remove-btn {
+  background: #e53e3e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 12px;
+  transition: background 0.2s;
+}
+.todo-remove-btn:hover {
+  background: #c53030;
+}
+
+@media (max-width: 500px) {
+  .todo-container {
+    padding: 16px 6px;
+  }
+  .todo-input {
+    font-size: 14px;
+  }
+  .todo-add-btn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
